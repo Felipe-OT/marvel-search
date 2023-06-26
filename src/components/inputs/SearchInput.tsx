@@ -8,11 +8,7 @@ import { motion } from "framer-motion";
 
 function SearchInput({ searchCharacter, setSearchValue }: ISearchInput) {
   return (
-    <SearchInputContainer
-      initial={{ opacity: 0  }}
-      animate={{ opacity: 1, transition: {delay: 0.1} }}
-      exit={{ opacity: 0 }}
-    >
+    <SearchInputContainer>
       <SearchForm
         onSubmit={(e: FormEvent) => {
           e.preventDefault();

@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import React from "react";
-import { motion } from 'framer-motion';
 
-export const SearchInputContainer = styled(motion.div)`
+export const SearchInputContainer = styled.div`
   width: 100%;
   max-width: 600px;
   background: rgba(31, 56, 92, 0.8);
