@@ -36,7 +36,7 @@ const CharacterCard = ({ hero }: IHeroType) => {
       <div className="h-full bg-[#353535] bg-opacity-50 group-hover/card:bg-[#970000]/40 backdrop-blur-sm px-3 sm:px-[6px] md:px-[10px] py-5 w-[170px] flex flex-col justify-between items-center transition-all duration-300">
         <span className="text-center text-lg sm:text-base md:text-lg font-bold">
           {hero.name}
-        </span>s
+        </span>
         <div className="w-full flex flex-col gap-y-2 font-bold">
           <div className="flex flex-row justify-between ">
             <span>Comics</span>

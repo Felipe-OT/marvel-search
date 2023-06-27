@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import getResults from "@/src/lib/getResults";
 import useSearch from "@/src/hooks/useSearch";
 import SearchInput from "@/src/components/inputs/SearchInput";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import CharacterCard from "@/src/components/cards/characterCard";
 
 interface IHeroType {
@@ -41,29 +41,28 @@ function ResultPage() {
         <motion.div
           className={`flex flex-col w-full justify-center items-center`}
         >
-          <AnimatePresence mode={"popLayout"}>
+          <AnimatePresence mode={"wait"}>
             <motion.div
+              key={"inputKey"}
               layout
               transition={{ duration: 0.5 }}
               className="w-full"
             >
               <SearchInput
+                value={searchValue}
                 searchCharacter={() => SearchAgain()}
                 setSearchValue={setSearchValue}
               />
             </motion.div>
 
             <motion.div
-              animate={{ transition: { duration: 0.5, delay: 0.3 } }}
               className={`grid grid-cols-1 gap-5 md:gap-10 sm:grid-cols-2 lg:grid-cols-3 justify-center w-fit ${
                 results.length > 0 && "mt-16"
               }`}
             >
-              <AnimatePresence  mode={"popLayout"} initial={false}>
-                {results?.map((hero: IHeroType) => (
-                  <CharacterCard key={hero.id} hero={hero}/>
-                ))}
-              </AnimatePresence>
+              {results?.map((hero: IHeroType) => (
+                <CharacterCard key={hero.id} hero={hero} />
+              ))}
             </motion.div>
           </AnimatePresence>
         </motion.div>

@@ -6,7 +6,7 @@ import useSearch from "../hooks/useSearch";
 import { motion } from "framer-motion";
 
 export default function Home() {
-  const { setSearchValue } = useSearch();
+  const { setSearchValue, searchValue } = useSearch();
   const router = useRouter();
 
   const searchCharacter = () => {
@@ -23,6 +23,7 @@ export default function Home() {
           className="w-full"
         >
           <SearchInput
+            value={searchValue}
             searchCharacter={() => searchCharacter()}
             setSearchValue={setSearchValue}
           />

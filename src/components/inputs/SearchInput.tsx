@@ -6,7 +6,7 @@ import SearchButton from "../buttons/SearchButton";
 import { ISearchInput } from "@/src/types/types";
 import { motion } from "framer-motion";
 
-function SearchInput({ searchCharacter, setSearchValue }: ISearchInput) {
+function SearchInput({ searchCharacter, setSearchValue, value }: ISearchInput) {
   return (
     <SearchInputContainer>
       <SearchForm
@@ -17,6 +17,7 @@ function SearchInput({ searchCharacter, setSearchValue }: ISearchInput) {
       >
         <StyledSearchInput
           type="text"
+          value={value}
           placeholder="Pesquise aqui o herói ou vilão"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setSearchValue(e.target.value)
