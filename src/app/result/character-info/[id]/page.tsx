@@ -8,12 +8,17 @@ import CharacterInfoAccordion from "@/src/components/accordion/characterInfoAcco
 import LineDivisor from "@/src/components/divisors/lineDivisor";
 import getCharacterInfo from "@/src/lib/getCharacterInfo";
 
-
 type DataFetch = {
-  comics:string,
-  events: string,
-  series: string
-}
+  comics: string;
+  events: string;
+  series: string;
+};
+
+type ContentType = {
+  comics: [];
+  events: [];
+  series: [];
+};
 
 const CharacterInfo = ({
   params,
@@ -22,30 +27,32 @@ const CharacterInfo = ({
 }) => {
   const { characterData } = useCharacter();
 
-  const [content, setContent] = useState({
-    comics: {},
-    events: {},
-    series: {}
-  })
+  const [content, setContent] = useState<ContentType>({
+    comics: [],
+    events: [],
+    series: [],
+  });
 
   const [dataSearchOffset, setDataSearchOffset] = useState({
-    comics: '0',
-    events: '0',
-    series: '0'
-  })
-
+    comics: "0",
+    events: "0",
+    series: "0",
+  });
 
   const characterInfo = async (search: string) => {
-    const offset = search as keyof DataFetch
+    const offset = search as keyof DataFetch;
 
-    const data = await getCharacterInfo(params.id, search, dataSearchOffset[offset] )
-    console.log(data)
+    const data = await getCharacterInfo(
+      params.id,
+      search,
+      dataSearchOffset[offset]
+    );
+    console.log(data);
     setContent((prevContent) => ({
       ...prevContent,
-      [search]: {...prevContent.comics, data},
+      [search]: { ...prevContent.comics, data },
     }));
-  }
-
+  };
 
   return (
     <div className="container mx-auto flex flex-col pt-20 mb-10">
@@ -65,15 +72,34 @@ const CharacterInfo = ({
           />
           <div className="flex flex-col gap-y-5 mt-5 max-w-[900px]">
             <h1 className="text-5xl">{characterData?.characterName}</h1>
-            <p className="text-xl" dangerouslySetInnerHTML={{__html: characterData?.characterDescription ? characterData?.characterDescription : 'Sem descrição'}}/>
+            <p
+              className="text-xl"
+              dangerouslySetInnerHTML={{
+                __html: characterData?.characterDescription
+                  ? characterData?.characterDescription
+                  : "Sem descrição",
+              }}
+            />
           </div>
         </div>
         <div className="flex flex-col gap-y-6">
-          <CharacterInfoAccordion title={'Comics'} content={content.comics} getContent={() => characterInfo('comics')}/>
-          <LineDivisor/>
-          <CharacterInfoAccordion title={'Events'} content={content.events} getContent={() => characterInfo('events')}/>
-          <LineDivisor/>
-          <CharacterInfoAccordion title={'Series'} content={content.series} getContent={() => characterInfo('series')}/>
+          <CharacterInfoAccordion
+            title={"Comics"}
+            content={content.comics}
+            getContent={() => characterInfo("comics")}
+          />
+          <LineDivisor />
+          <CharacterInfoAccordion
+            title={"Events"}
+            content={content.events}
+            getContent={() => characterInfo("events")}
+          />
+          <LineDivisor />
+          <CharacterInfoAccordion
+            title={"Series"}
+            content={content.series}
+            getContent={() => characterInfo("series")}
+          />
         </div>
       </motion.div>
     </div>
