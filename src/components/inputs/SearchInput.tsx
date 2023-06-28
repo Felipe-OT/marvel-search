@@ -18,7 +18,7 @@ function SearchInput({ searchCharacter, setSearchValue, value }: ISearchInput) {
         <StyledSearchInput
           type="text"
           value={value}
-          placeholder="Pesquise aqui o herói ou vilão"
+          placeholder="Search here for a hero or villain"
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
             setSearchValue(e.target.value)
           }

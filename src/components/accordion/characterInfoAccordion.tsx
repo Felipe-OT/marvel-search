@@ -66,7 +66,7 @@ const CharacterInfoAccordion = ({ title, content, getContent }) => {
                   />
                   <div className="flex flex-col gap-y-5 lg:max-w-[275px] xl:max-w-none text-lg flex-1">
                     <span>Title: {item.title}</span>
-                    <span>Release: {formateDate(item.date)}</span>
+                    <span>Release: {item.date.length > 4 ? formateDate(item.date) : item.date}</span>
                   </div>
                 </div>
               ))

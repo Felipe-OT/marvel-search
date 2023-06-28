@@ -51,13 +51,13 @@ const CharacterCard = ({ hero, click }: IHeroType) => {
               </div>
             </div>
             <div className="flex flex-row justify-between">
-              <span>Eventos</span>
+              <span>Events</span>
               <div className="p-[5px] bg-white/40 group-hover/card:bg-red-500 rounded-lg min-w-[29px] h-[29px] flex justify-center items-center font-bold  transition-all duration-300">
                 <span>{hero.events.available}</span>
               </div>
             </div>
             <div className="flex flex-row justify-between">
-              <span>Séries</span>
+              <span>Series</span>
               <div className="p-[5px] bg-white/40 group-hover/card:bg-blue-500 rounded-lg min-w-[29px] h-[29px] flex justify-center items-center font-bold  transition-all duration-300">
                 <span>{hero.series.available}</span>
               </div>
