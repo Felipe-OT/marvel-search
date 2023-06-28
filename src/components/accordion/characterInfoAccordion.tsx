@@ -82,7 +82,7 @@ const CharacterInfoAccordion = ({ title, content, getContent }: BasicInfo) => {
                     <span>Title: {item.title}</span>
                     <span>
                       Release:{" "}
-                      {item.date.length > 4
+                      {item.date?.length > 4
                         ? formateDate(item.date)
                         : item.date}
                     </span>
