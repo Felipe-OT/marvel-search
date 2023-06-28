@@ -16,6 +16,10 @@
   }
 }
 
+.scrollable-div::-webkit-scrollbar {
+  position: absolute;
+  left: 0;
+}
 body {
   color: rgb(var(--foreground-rgb));
   background-image: url("../../public/home-bg.jpg");

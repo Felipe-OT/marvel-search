@@ -2,6 +2,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import StyledComponentsRegistry from "@/src/lib/registry";
 import { SearchProvider } from "../context/searchContext";
+import PageWrapper from "../components/wrapper/page-wrapper";
 
 const myFont = localFont({
   src: [
@@ -29,7 +30,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={myFont.className}>
         <SearchProvider>
-          <StyledComponentsRegistry>{children}</StyledComponentsRegistry>
+          <StyledComponentsRegistry>
+           {children}
+          </StyledComponentsRegistry>
         </SearchProvider>
       </body>
     </html>
