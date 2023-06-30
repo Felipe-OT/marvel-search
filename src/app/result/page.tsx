@@ -58,8 +58,8 @@ function ResultPage() {
     });
     setPageOpacity(false);
     setTimeout(() => {
-      router.push("result/character-info/" + characterId);
-    }, 300);
+      router.push(`result/character-info/${characterId}`);
+    }, 250);
   };
 
   return (

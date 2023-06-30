@@ -12,7 +12,16 @@ type CharacterInfoData = {
   thumbnail: { path: string };
 };
 
-export default async function getCharacterInfo(
+export async function getCharacterBasicInfo(id: string) {
+  const res = await fetch(`http://localhost:3000/api/character-info/${id}`)
+  const data = await res.json()
+
+  if (!res.ok) throw new Error("Falha ao realizar a pesquisa");
+
+  return {name: data.data.results[0].name, image: data.data.results[0].thumbnail.path, description: data.data.results[0].description}
+}
+
+export async function getCharacterInfo(
   characterId: string,
   search: string,
   offset: string
