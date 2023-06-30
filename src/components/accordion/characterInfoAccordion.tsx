@@ -2,6 +2,7 @@ import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import LoadingAnimation from "@/public/animations/loadingAnimation.json";
+import { motion } from "framer-motion";
 
 type ContentInfo = {
   id: number;
@@ -65,36 +66,46 @@ const CharacterInfoAccordion = ({ title, content, getContent }: BasicInfo) => {
         </div>
       </div>
       <div className={`${!isOpen && "hidden"}`}>
-        <div className="flex flex-row flex-wrap justify-start gap-10 md:px-5">
+        <div>
           {Array.isArray(content) ? (
-            <Lottie
-              animationData={LoadingAnimation}
-              loop={true}
-              style={{ width: 200, height: 200 }}
-            />
+            <div className="w-full flex justify-center">
+              <Lottie
+                animationData={LoadingAnimation}
+                loop={true}
+                style={{ width: 100, height: 100, alignSelf: "center" }}
+              />
+            </div>
           ) : content.data?.length > 0 ? (
-            content.data.map((item: ContentInfo) => (
-              <div
-                key={item.id}
-                className="flex flex-row gap-x-3 flex-1 min-w-[330px] max-w-[418px] items-center"
-              >
-                <Image
-                  width={100}
-                  height={150}
-                  src={item.image + "/portrait_medium.jpg"}
-                  alt={item.title}
-                />
-                <div className="flex flex-col gap-y-5 lg:max-w-[275px] xl:max-w-none text-lg flex-1">
-                  <span>Title: {item.title}</span>
-                  <span>
-                    Release:{" "}
-                    {item.date?.length > 4 ? formateDate(item.date) : item.date}
-                  </span>
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
+              className="flex flex-row flex-wrap justify-start gap-10 md:px-5"
+            >
+              {content.data.map((item: ContentInfo) => (
+                <div
+                  key={item.id}
+                  className="flex flex-row gap-x-3 flex-1 min-w-[330px] max-w-[418px] items-center"
+                >
+                  <Image
+                    width={100}
+                    height={150}
+                    src={item.image + "/portrait_medium.jpg"}
+                    alt={item.title}
+                  />
+                  <div className="flex flex-col gap-y-5 lg:max-w-[275px] xl:max-w-none text-lg flex-1">
+                    <span>Title: {item.title}</span>
+                    <span>
+                      Release:{" "}
+                      {item.date?.length > 4
+                        ? formateDate(item.date)
+                        : item.date}
+                    </span>
+                  </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </motion.div>
           ) : (
-            'Sem conteúdo'
+            "Sem conteúdo"
           )}
         </div>
       </div>
