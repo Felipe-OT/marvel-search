@@ -24,19 +24,22 @@ type BasicInfo = {
 };
 
 type ContentType = {
-  comics: [];
-  events: [];
-  series: [];
+  comics: { data: any[] };
+  events: { data: any[] };
+  series: { data: any[] };
 };
 
 const CharacterInfo = ({ params }: { params: { id: string } }) => {
   const { characterData } = useCharacter();
-
+  const [mounted, setMounted] = useState(false);
   const [basicData, setBasicData] = useState<BasicInfo>();
+  const [offsetParameter, setOffsetParameter] = useState<
+    "comics" | "events" | "series"
+  >();
   const [content, setContent] = useState<ContentType>({
-    comics: [],
-    events: [],
-    series: [],
+    comics: { data: [] },
+    events: { data: [] },
+    series: { data: [] },
   });
 
   const [dataSearchOffset, setDataSearchOffset] = useState({
@@ -45,9 +48,8 @@ const CharacterInfo = ({ params }: { params: { id: string } }) => {
     series: "0",
   });
 
-  const characterInfo = async (search: string) => {
+  const characterInfo = async (search: "comics" | "events" | "series") => {
     const offset = search as keyof DataFetch;
-
     const data = await getCharacterInfo(
       params.id,
       search,
@@ -56,9 +58,35 @@ const CharacterInfo = ({ params }: { params: { id: string } }) => {
     console.log(data);
     setContent((prevContent) => ({
       ...prevContent,
-      [search]: { ...prevContent.comics, data },
+      [search]: {
+        ...prevContent[search],
+        data: prevContent[search].data
+          ? [...prevContent[search].data, ...data]
+          : data,
+      },
     }));
   };
+
+  const getMoreData = (search: "comics" | "events" | "series") => {
+    setDataSearchOffset((prevContent) => ({
+      ...prevContent,
+      [search]: String(parseInt(prevContent[search]) + 20),
+    }));
+    setOffsetParameter(search);
+  };
+
+  useEffect(() => {
+    if (mounted) {
+      // Sua função aqui
+      if (offsetParameter) characterInfo(offsetParameter);
+    } else {
+      setMounted(true);
+    }
+  }, [dataSearchOffset]);
+
+  useEffect(() => {
+    console.log(content);
+  }, [content]);
 
   useEffect(() => {
     getBasicData();
@@ -77,7 +105,7 @@ const CharacterInfo = ({ params }: { params: { id: string } }) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
             exit={{ opacity: 0 }}
-            className="bg-[#1A2037]/70 px-5 py-10 md:p-20 rounded-3xl backdrop-blur-[20px] flex flex-col gap-y-20"
+            className="bg-[#1A2037]/25 px-5 py-10 md:p-20 rounded-xl backdrop-blur-[20px] flex flex-col gap-y-20"
           >
             <div className="flex flex-col md:flex-row  items-center gap-x-10">
               {basicData && (
@@ -86,7 +114,7 @@ const CharacterInfo = ({ params }: { params: { id: string } }) => {
                   className="rounded-lg"
                   width={170}
                   height={220}
-                  src={basicData?.image + "/portrait_fantastic.jpg"}
+                  src={basicData?.image + "/portrait_uncanny.jpg"}
                   alt="heroi"
                 />
               )}
@@ -106,18 +134,21 @@ const CharacterInfo = ({ params }: { params: { id: string } }) => {
               <CharacterInfoAccordion
                 title={"Comics"}
                 content={content.comics}
+                offset={() => getMoreData("comics")}
                 getContent={() => characterInfo("comics")}
               />
               <LineDivisor />
               <CharacterInfoAccordion
                 title={"Events"}
                 content={content.events}
+                offset={() => getMoreData("events")}
                 getContent={() => characterInfo("events")}
               />
               <LineDivisor />
               <CharacterInfoAccordion
                 title={"Series"}
                 content={content.series}
+                offset={() => getMoreData("series")}
                 getContent={() => characterInfo("series")}
               />
             </div>

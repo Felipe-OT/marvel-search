@@ -13,13 +13,19 @@ type ContentInfo = {
 
 type BasicInfo = {
   title: string;
-  content: { data: ContentInfo[] } | [];
+  content: { data: ContentInfo[] };
   getContent: () => void;
+  offset: () => void;
 };
 
-const CharacterInfoAccordion = ({ title, content, getContent }: BasicInfo) => {
+const CharacterInfoAccordion = ({
+  title,
+  content,
+  getContent,
+  offset,
+}: BasicInfo) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const [loading, setLoading] = useState(false);
   const formateDate = (date: string) => {
     const formated = date.slice(0, 10).replace(/-/g, " / ");
     return formated;
@@ -29,13 +35,23 @@ const CharacterInfoAccordion = ({ title, content, getContent }: BasicInfo) => {
     console.log(content);
   }, [content]);
 
+  useEffect(() => {
+    if (isOpen && content.data.length == 0) {
+      handleLoadContent();
+    }
+  }, [isOpen]);
+
+  const handleLoadContent = async () => {
+    setLoading(true);
+    await getContent();
+    setLoading(false);
+  };
+
   return (
     <div className="flex flex-col gap-y-10 ">
       <div
         className="flex flex-row gap-x-3 items-center cursor-pointer"
         onClick={() => {
-          getContent();
-
           setIsOpen(!isOpen);
         }}
       >
@@ -66,48 +82,42 @@ const CharacterInfoAccordion = ({ title, content, getContent }: BasicInfo) => {
         </div>
       </div>
       <div className={`${!isOpen && "hidden"}`}>
-        <div>
-          {Array.isArray(content) ? (
-            <div className="w-full flex justify-center">
-              <Lottie
-                animationData={LoadingAnimation}
-                loop={true}
-                style={{ width: 100, height: 100, alignSelf: "center" }}
-              />
-            </div>
-          ) : content.data?.length > 0 ? (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
-              className="flex flex-row flex-wrap justify-start gap-10 md:px-5"
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
+          className="flex flex-row flex-wrap justify-start gap-10 md:px-5"
+        >
+          {content?.data.map((item: ContentInfo) => (
+            <div
+              key={item.id}
+              className="flex flex-row gap-x-3 flex-1 min-w-[330px] max-w-[418px] items-center"
             >
-              {content.data.map((item: ContentInfo) => (
-                <div
-                  key={item.id}
-                  className="flex flex-row gap-x-3 flex-1 min-w-[330px] max-w-[418px] items-center"
-                >
-                  <Image
-                    width={100}
-                    height={150}
-                    src={item.image + "/portrait_medium.jpg"}
-                    alt={item.title}
-                  />
-                  <div className="flex flex-col gap-y-5 lg:max-w-[275px] xl:max-w-none text-lg flex-1">
-                    <span>Title: {item.title}</span>
-                    <span>
-                      Release:{" "}
-                      {item.date?.length > 4
-                        ? formateDate(item.date)
-                        : item.date}
-                    </span>
-                  </div>
-                </div>
-              ))}
-            </motion.div>
-          ) : (
-            "Sem conteúdo"
-          )}
-        </div>
+              <Image
+                width={100}
+                height={150}
+                src={item.image + "/portrait_medium.jpg"}
+                alt={item.title}
+              />
+              <div className="flex flex-col gap-y-5 lg:max-w-[275px] xl:max-w-none text-lg flex-1">
+                <span>Title: {item.title}</span>
+                <span>
+                  Release:{" "}
+                  {item.date?.length > 4 ? formateDate(item.date) : item.date}
+                </span>
+              </div>
+            </div>
+          ))}
+        </motion.div>
+        {loading && (
+          <div className="w-full flex justify-center">
+            <Lottie
+              animationData={LoadingAnimation}
+              loop={true}
+              style={{ width: 100, height: 100, alignSelf: "center" }}
+            />
+          </div>
+        )}
+        <button onClick={() => offset()}>See more</button>
       </div>
     </div>
   );
