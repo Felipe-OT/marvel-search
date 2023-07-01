@@ -42,8 +42,8 @@ function ResultPage() {
   };
 
   useEffect(() => {
-    console.log(results)
-  },[results])
+    console.log(results);
+  }, [results]);
 
   const goToInfoPage = (
     characterId: number,
@@ -64,17 +64,21 @@ function ResultPage() {
 
   return (
     <motion.div
-      className={`flex min-h-screen flex-col items-center justify-center px-4 sm:px-0 py-28 ${
+      className={`flex min-h-screen flex-col items-center justify-center px-4 sm:px-0 py-28  ${
         pageOpacity ? "opacity-100" : "opacity-0"
       } transition-opacity duration-300`}
     >
-      <div className="container mx-auto flex flex-col gap-y-10 justify-center items-center">
+      <div
+        className={`container mx-auto flex flex-col  ${
+          results.length > 0 && "gap-y-10"
+        }  justify-center items-center`}
+      >
         <LayoutGroup>
           <motion.div
             layout="position"
             key={"inputKey"}
             transition={{ duration: 0.5 }}
-            className="w-full flex"
+            className="w-full flex "
           >
             <SearchInput
               value={searchValue}
@@ -84,7 +88,7 @@ function ResultPage() {
           </motion.div>
           <motion.ul
             key={"resultList"}
-            className={`grid grid-cols-1 gap-5 md:gap-10 md:gap-x-16 sm:grid-cols-2 lg:grid-cols-3 justify-center w-fit ${
+            className={`grid grid-cols-1 gap-5 md:gap-10 md:gap-x-16 sm:grid-cols-2 lg:grid-cols-3 justify-center w-fit  ${
               results.length > 0 && "mt-16"
             }`}
           >
