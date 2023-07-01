@@ -15,7 +15,7 @@ type CharacterInfoData = {
 export async function getCharacterBasicInfo(id: string) {
   const res = await fetch(`http://localhost:3000/api/character-info/${id}`)
   const data = await res.json()
-
+  console.log(data)
   if (!res.ok) throw new Error("Falha ao realizar a pesquisa");
 
   return {name: data.data.results[0].name, image: data.data.results[0].thumbnail.path, description: data.data.results[0].description}
@@ -24,7 +24,7 @@ export async function getCharacterBasicInfo(id: string) {
 export async function getCharacterInfo(
   characterId: string,
   search: string,
-  offset: string
+  offset: number
 ) {
   const res = await fetch(
     `https://gateway.marvel.com:443/v1/public/characters/${characterId}/${search}?limit=20&offset=${offset}&apikey=d158498c097567406c1e29f6202a5f4f&hash=43a2930ceed84cfe63db8b5efe33599c&ts=1`
@@ -52,11 +52,10 @@ export async function getCharacterInfo(
           : result.startYear,
       image: result.thumbnail.path,
     };
-    console.log(newData);
+
     return newData;
   });
 
-  console.log(formatedData);
 
   return formatedData;
 }

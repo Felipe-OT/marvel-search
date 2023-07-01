@@ -29,8 +29,11 @@ type ContentType = {
   series: { data: any[] };
 };
 
+type SearchParams = {
+  offsetSearch: "comics" | "events" | "series";
+};
+
 const CharacterInfo = ({ params }: { params: { id: string } }) => {
-  const { characterData } = useCharacter();
   const [mounted, setMounted] = useState(false);
   const [basicData, setBasicData] = useState<BasicInfo>();
   const [offsetParameter, setOffsetParameter] = useState<
@@ -43,19 +46,17 @@ const CharacterInfo = ({ params }: { params: { id: string } }) => {
   });
 
   const [dataSearchOffset, setDataSearchOffset] = useState({
-    comics: "0",
-    events: "0",
-    series: "0",
+    comics: 0,
+    events: 0,
+    series: 0,
   });
 
-  const characterInfo = async (search: "comics" | "events" | "series") => {
+  const characterInfo = async (
+    search: "comics" | "events" | "series",
+    offsetSearch: number
+  ) => {
     const offset = search as keyof DataFetch;
-    const data = await getCharacterInfo(
-      params.id,
-      search,
-      dataSearchOffset[offset]
-    );
-    console.log(data);
+    const data = await getCharacterInfo(params.id, search, offsetSearch);
     setContent((prevContent) => ({
       ...prevContent,
       [search]: {
@@ -67,35 +68,26 @@ const CharacterInfo = ({ params }: { params: { id: string } }) => {
     }));
   };
 
-  const getMoreData = (search: "comics" | "events" | "series") => {
+  async function getBasicData() {
+    const res = await getCharacterBasicInfo(params.id);
+    console.log(res)
+    setBasicData(res);
+  }
+
+
+
+  const getMoreData = async (search: "comics" | "events" | "series") => {
     setDataSearchOffset((prevContent) => ({
       ...prevContent,
-      [search]: String(parseInt(prevContent[search]) + 20),
+      [search]: prevContent[search] + 20,
     }));
     setOffsetParameter(search);
+    await characterInfo(search, dataSearchOffset[search] + 20);
   };
-
-  useEffect(() => {
-    if (mounted) {
-      // Sua função aqui
-      if (offsetParameter) characterInfo(offsetParameter);
-    } else {
-      setMounted(true);
-    }
-  }, [dataSearchOffset]);
-
-  useEffect(() => {
-    console.log(content);
-  }, [content]);
 
   useEffect(() => {
     getBasicData();
   }, []);
-
-  async function getBasicData() {
-    const res = await getCharacterBasicInfo(params.id);
-    setBasicData(res);
-  }
 
   return (
     <>
@@ -135,21 +127,21 @@ const CharacterInfo = ({ params }: { params: { id: string } }) => {
                 title={"Comics"}
                 content={content.comics}
                 offset={() => getMoreData("comics")}
-                getContent={() => characterInfo("comics")}
+                getContent={() => characterInfo("comics", 0)}
               />
               <LineDivisor />
               <CharacterInfoAccordion
                 title={"Events"}
                 content={content.events}
                 offset={() => getMoreData("events")}
-                getContent={() => characterInfo("events")}
+                getContent={() => characterInfo("events", 0)}
               />
               <LineDivisor />
               <CharacterInfoAccordion
                 title={"Series"}
                 content={content.series}
                 offset={() => getMoreData("series")}
-                getContent={() => characterInfo("series")}
+                getContent={() => characterInfo("series", 0)}
               />
             </div>
           </motion.div>

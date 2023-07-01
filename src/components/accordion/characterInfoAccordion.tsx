@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Lottie from "lottie-react";
 import LoadingAnimation from "@/public/animations/loadingAnimation.json";
 import { motion } from "framer-motion";
+import { AccordionWrapper } from "./style";
 
 type ContentInfo = {
   id: number;
@@ -26,14 +27,11 @@ const CharacterInfoAccordion = ({
 }: BasicInfo) => {
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [dataFetched, setDataFetched] = useState(false);
   const formateDate = (date: string) => {
     const formated = date.slice(0, 10).replace(/-/g, " / ");
     return formated;
   };
-
-  useEffect(() => {
-    console.log(content);
-  }, [content]);
 
   useEffect(() => {
     if (isOpen && content.data.length == 0) {
@@ -47,8 +45,17 @@ const CharacterInfoAccordion = ({
     setLoading(false);
   };
 
+
+
+ 
+  const getMoreData = async () => {
+    setLoading(true)
+    await offset();
+    setLoading(false)
+  }
+
   return (
-    <div className="flex flex-col gap-y-10 ">
+    <AccordionWrapper>
       <div
         className="flex flex-row gap-x-3 items-center cursor-pointer"
         onClick={() => {
@@ -82,14 +89,12 @@ const CharacterInfoAccordion = ({
         </div>
       </div>
       <div className={`${!isOpen && "hidden"}`}>
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
-          className="flex flex-row flex-wrap justify-start gap-10 md:px-5"
-        >
+        <div className="flex flex-row flex-wrap justify-start gap-10 md:px-5">
           {content?.data.map((item: ContentInfo) => (
-            <div
+            <motion.div
               key={item.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0, transition: { duration: 1 } }}
               className="flex flex-row gap-x-3 flex-1 min-w-[330px] max-w-[418px] items-center"
             >
               <Image
@@ -105,9 +110,9 @@ const CharacterInfoAccordion = ({
                   {item.date?.length > 4 ? formateDate(item.date) : item.date}
                 </span>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </motion.div>
+        </div>
         {loading && (
           <div className="w-full flex justify-center">
             <Lottie
@@ -117,9 +122,15 @@ const CharacterInfoAccordion = ({
             />
           </div>
         )}
-        <button onClick={() => offset()}>See more</button>
+        {!loading && content.data.length > 0 && (
+          <div className="w-full flex justify-center py-5">
+            <button onClick={() => getMoreData()}>
+              <span className="text-lg font-bold">See more</span>
+            </button>
+          </div>
+        )}
       </div>
-    </div>
+    </AccordionWrapper>
   );
 };
 
