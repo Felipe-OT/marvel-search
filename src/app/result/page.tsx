@@ -21,29 +21,38 @@ interface IHeroType {
   series: { available: string };
 }
 
+type SearchError = {
+  msg: string;
+  status: number;
+};
+
 function ResultPage() {
   const { setSearchValue, searchValue } = useSearch();
   const { setCharacterData, characterData } = useCharacter();
   const [results, setResults] = useState([]);
+  const [searchError, setSearchError] = useState<SearchError>();
   const [pageOpacity, setPageOpacity] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const fetchData = async () => {
-      const resultData = await getResults(searchValue);
-      setResults(resultData);
-    };
+    
     fetchData();
   }, []);
 
-  const SearchAgain = async () => {
+  const fetchData = async () => {
     const resultData = await getResults(searchValue);
-    setResults(resultData);
+    if (resultData.status == 500) {
+      setSearchError({ msg: resultData.msg, status: resultData.status });
+      setResults([]);
+    } else {
+      setResults(resultData);
+      setSearchError({msg: '', status: 200});
+    }
   };
 
-  useEffect(() => {
-    console.log(results);
-  }, [results]);
+  const SearchAgain = async () => {
+    fetchData()
+  };
 
   const goToInfoPage = (
     characterId: number,
@@ -62,6 +71,10 @@ function ResultPage() {
     }, 250);
   };
 
+  useEffect(() => {
+    console.log(searchError)
+  },[searchError])
+
   return (
     <motion.div
       className={`flex min-h-screen flex-col items-center justify-center px-4 sm:px-0 py-28  ${
@@ -78,13 +91,18 @@ function ResultPage() {
             layout="position"
             key={"inputKey"}
             transition={{ duration: 0.5 }}
-            className="w-full flex "
+            className="flex flex-col w-full relative items-center gap-y-3"
           >
             <SearchInput
               value={searchValue}
               searchCharacter={() => SearchAgain()}
               setSearchValue={setSearchValue}
             />
+            {searchError?.status == 500 && (
+              <div>
+                <span>{searchError.msg}</span>
+              </div>
+            )}
           </motion.div>
           <motion.ul
             key={"resultList"}
@@ -92,22 +110,24 @@ function ResultPage() {
               results.length > 0 && "mt-16"
             }`}
           >
-            <AnimatePresence mode="wait">
-              {results?.map((hero: IHeroType) => (
-                <CharacterCard
-                  key={hero.id}
-                  hero={hero}
-                  click={() =>
-                    goToInfoPage(
-                      hero.id,
-                      hero.name,
-                      hero.thumbnail.path,
-                      hero.description
-                    )
-                  }
-                />
-              ))}
-            </AnimatePresence>
+            {Array.isArray(results) && (
+              <AnimatePresence mode="wait">
+                {results?.map((hero: IHeroType) => (
+                  <CharacterCard
+                    key={hero.id}
+                    hero={hero}
+                    click={() =>
+                      goToInfoPage(
+                        hero.id,
+                        hero.name,
+                        hero.thumbnail.path,
+                        hero.description
+                      )
+                    }
+                  />
+                ))}
+              </AnimatePresence>
+            )}
           </motion.ul>
         </LayoutGroup>
       </div>

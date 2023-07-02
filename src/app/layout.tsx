@@ -3,6 +3,8 @@ import localFont from "next/font/local";
 import StyledComponentsRegistry from "@/src/lib/registry";
 import { SearchProvider } from "../context/searchContext";
 import PageWrapper from "../components/wrapper/page-wrapper";
+import Image from "next/image";
+import Logo from '@/public/logo-web.png'
 
 const myFont = localFont({
   src: [
@@ -29,6 +31,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={myFont.className}>
+        {/*<header className="w-full flex justify-center">
+          <Image src={Logo} width={200} height={200} />
+        </header>*/}
         <SearchProvider>
           <StyledComponentsRegistry>
            {children}
