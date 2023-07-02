@@ -35,6 +35,7 @@ const CharacterInfoAccordion = ({
   };
 
   useEffect(() => {
+    console.log(isOpen);
     if (isOpen && content.data.length == 0) {
       handleLoadContent();
     }
@@ -52,6 +53,10 @@ const CharacterInfoAccordion = ({
     setLoading(false);
   };
 
+  useEffect(() => {
+    console.log(loading);
+  }, [loading]);
+
   return (
     <AccordionWrapper>
       <div
@@ -61,7 +66,11 @@ const CharacterInfoAccordion = ({
         }}
       >
         <span className="text-xl">{title}</span>
-        <div className={`${isOpen ? 'rotate-180 -scale-x-100 ' : 'rotate-0'} transition-all`}>
+        <div
+          className={`${
+            isOpen ? "rotate-180 -scale-x-100 " : "rotate-0"
+          } transition-all`}
+        >
           <svg
             width="18"
             height="18"
@@ -91,10 +100,9 @@ const CharacterInfoAccordion = ({
           <motion.div
             className="overflow-hidden"
             key={"accordion-content"}
-            transition={{ duration: 1 }}
             initial={{ height: 0 }}
             animate={{ height: "auto" }}
-            exit={{ height: 0 }}
+            exit={{ height: 0, transition: { duration: 1 } }}
           >
             <div className="flex flex-row flex-wrap justify-start gap-10 md:px-5">
               {content?.data.map((item: ContentInfo) => (
@@ -123,13 +131,16 @@ const CharacterInfoAccordion = ({
               ))}
             </div>
             {loading && (
-              <div className="w-full flex justify-center">
+              <motion.div
+                key={"loading"}
+                className="w-full flex justify-center"
+              >
                 <Lottie
                   animationData={LoadingAnimation}
                   loop={true}
                   style={{ width: 100, height: 100, alignSelf: "center" }}
                 />
-              </div>
+              </motion.div>
             )}
             {!loading && content.data.length > 0 && (
               <div className="w-full flex justify-center py-5">
