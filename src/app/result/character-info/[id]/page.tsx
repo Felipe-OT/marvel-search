@@ -70,11 +70,9 @@ const CharacterInfo = ({ params }: { params: { id: string } }) => {
 
   async function getBasicData() {
     const res = await getCharacterBasicInfo(params.id);
-    console.log(res)
+    console.log(res);
     setBasicData(res);
   }
-
-
 
   const getMoreData = async (search: "comics" | "events" | "series") => {
     setDataSearchOffset((prevContent) => ({
@@ -129,14 +127,14 @@ const CharacterInfo = ({ params }: { params: { id: string } }) => {
                 offset={() => getMoreData("comics")}
                 getContent={() => characterInfo("comics", 0)}
               />
-              <LineDivisor />
+
               <CharacterInfoAccordion
                 title={"Events"}
                 content={content.events}
                 offset={() => getMoreData("events")}
                 getContent={() => characterInfo("events", 0)}
               />
-              <LineDivisor />
+
               <CharacterInfoAccordion
                 title={"Series"}
                 content={content.series}
