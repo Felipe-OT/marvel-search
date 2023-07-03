@@ -1,4 +1,6 @@
-Esse é um projeto desenvolvido utilizando NextJs, utilizando a API da Marvel para buscar personagens e suas histórias.
+Esse é um projeto desenvolvido utilizando NextJs e Typescript, utilizando a API da Marvel para buscar personagens e suas histórias.
+
+Qualquer sugestão de modificação referente ao código ou o design do app, será muito bem-vindo.
 
 ## Iniciando
 
