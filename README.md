@@ -2,6 +2,8 @@ Esse é um projeto desenvolvido utilizando NextJs e Typescript, utilizando a API
 
 Qualquer sugestão de modificação referente ao código ou o design do app, será muito bem-vindo.
 
+Caso queiram visualizar o projeto, acessem: https://marvel-search-flame.vercel.app/
+
 ## Iniciando
 
 Para iniciar a aplicação, utilize npm install para instalar as dependencias, e em seguida utilize o comando abaixo:
