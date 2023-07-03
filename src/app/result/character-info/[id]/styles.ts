@@ -14,6 +14,7 @@ export const CharacterInfoContainer = styled(Container)`
 export const CharacterInfoBoard = styled(motion.div)`
   display: flex;
   flex-direction: column;
+  position: relative;
   border-radius: 0.75rem;
   background-color: rgb(26 32 55 / 0.25);
   padding-left: 1.25rem /* 20px */;
@@ -28,6 +29,20 @@ export const CharacterInfoBoard = styled(motion.div)`
     padding: 5rem;
   }
 `;
+
+export const CloseBtn = styled.button`
+  position: absolute;
+  right: 2.5rem;
+  top: 2.5rem;
+  padding: 0.75rem;
+  border-radius: 100%;
+  background-color: rgba(24, 42, 63, 0.35);
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.35);
+  }
+;
+`
 
 export const CharacterBasicInfo = styled.div`
   display: flex;

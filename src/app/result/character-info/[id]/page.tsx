@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
 import Image from "next/image";
 import CharacterInfoAccordion from "@/src/components/accordion/characterInfoAccordion";
 import {
@@ -13,7 +12,9 @@ import {
   CharacterInfoAccordionWrapper,
   CharacterInfoBoard,
   CharacterInfoContainer,
+  CloseBtn,
 } from "./styles";
+import { useRouter } from "next/navigation";
 
 type DataFetch = {
   comics: string;
@@ -35,6 +36,7 @@ type ContentType = {
 
 const CharacterInfo = ({ params }: { params: { id: string } }) => {
   const [mounted, setMounted] = useState(false);
+  const router = useRouter();
   const [basicData, setBasicData] = useState<BasicInfo>();
   const [offsetParameter, setOffsetParameter] = useState<
     "comics" | "events" | "series"
@@ -95,6 +97,21 @@ const CharacterInfo = ({ params }: { params: { id: string } }) => {
             animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
             exit={{ opacity: 0 }}
           >
+            <CloseBtn onClick={() => router.back()}>
+              <svg
+                width="11"
+                height="11"
+                viewBox="0 0 11 11"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.997559 0.871216L9.65956 9.53323M9.65958 0.871216L0.997579 9.53323"
+                  stroke="white"
+                  strokeWidth="2"
+                />
+              </svg>
+            </CloseBtn>
             <CharacterBasicInfo>
               {basicData && (
                 <Image
