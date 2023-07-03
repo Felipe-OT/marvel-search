@@ -13,7 +13,7 @@ type CharacterInfoData = {
 };
 
 export async function getCharacterBasicInfo(id: string) {
-  const res = await fetch(`http://localhost:3000/api/character-info/${id}`)
+  const res = await fetch(`/api/character-info/${id}`)
   const data = await res.json()
   console.log(data)
   if (!res.ok) throw new Error("Falha ao realizar a pesquisa");
