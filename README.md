@@ -1,4 +1,4 @@
-### Marvel Search App ###
+# Marvel Search App
 
 
 Esse é um projeto desenvolvido utilizando NextJs e Typescript, utilizando a API da Marvel para buscar personagens e suas histórias.
