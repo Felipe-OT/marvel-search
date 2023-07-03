@@ -4,6 +4,7 @@ import SearchInput from "../components/inputs/SearchInput";
 import { useRouter } from "next/navigation";
 import useSearch from "../hooks/useSearch";
 import { motion } from "framer-motion";
+import { HomeInputContainer, HomeInputWrapper, HomePageWrapper } from "./styles";
 
 export default function Home() {
   const { setSearchValue, searchValue } = useSearch();
@@ -14,19 +15,19 @@ export default function Home() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center px-4 sm:px-0 py-28">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
-        exit={{ opacity: 0 }}
-        className="container mx-auto flex flex-col gap-y-10 justify-center items-center"
-      >
+    <HomePageWrapper>
+      <HomeInputContainer>
+        <HomeInputWrapper
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0, transition: { duration: 0.5 } }}
+          exit={{ opacity: 0 }}
+        ></HomeInputWrapper>
         <SearchInput
           value={searchValue}
           searchCharacter={() => searchCharacter()}
           setSearchValue={setSearchValue}
         />
-      </motion.div>
-    </div>
+      </HomeInputContainer>
+    </HomePageWrapper>
   );
 }
