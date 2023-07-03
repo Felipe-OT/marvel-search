@@ -35,7 +35,7 @@ const CharacterInfoAccordion = ({
   };
 
   useEffect(() => {
-    console.log(isOpen);
+
     if (isOpen && content.data.length == 0) {
       handleLoadContent();
     }
@@ -52,10 +52,6 @@ const CharacterInfoAccordion = ({
     await offset();
     setLoading(false);
   };
-
-  useEffect(() => {
-    console.log(loading);
-  }, [loading]);
 
   return (
     <AccordionWrapper>

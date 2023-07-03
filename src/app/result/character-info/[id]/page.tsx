@@ -66,12 +66,10 @@ const CharacterInfo = ({ params }: { params: { id: string } }) => {
           : data,
       },
     }));
-    console.log("first");
   };
 
   async function getBasicData() {
     const res = await getCharacterBasicInfo(params.id);
-    console.log(res);
     setBasicData(res);
   }
 

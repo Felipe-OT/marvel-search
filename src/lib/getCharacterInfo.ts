@@ -15,7 +15,7 @@ type CharacterInfoData = {
 export async function getCharacterBasicInfo(id: string) {
   const res = await fetch(`/api/character-info/${id}`)
   const data = await res.json()
-  console.log(data)
+
   if (!res.ok) throw new Error("Falha ao realizar a pesquisa");
 
   return {name: data.data.results[0].name, image: data.data.results[0].thumbnail.path, description: data.data.results[0].description}

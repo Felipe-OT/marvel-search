@@ -38,12 +38,12 @@ function ResultPage() {
 
 
   useEffect(() => {
-    console.log(searchValue)
+
     fetchData();
   }, []);
 
   const fetchData = async () => {
-    console.log('fetching')
+
     const resultData = await getResults(searchValue);
     if (resultData.status == 500) {
       setSearchError({ msg: resultData.msg, status: resultData.status });
@@ -75,9 +75,6 @@ function ResultPage() {
     }, 250);
   };
 
-  useEffect(() => {
-    console.log(pageOpacity);
-  }, [pageOpacity]);
 
   return (
     <ResultsPage pageOpacity={pageOpacity}>
