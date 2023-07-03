@@ -8,6 +8,7 @@ type HeroType = {
 };
 
 export default async function getResults(searchParams: string) {
+  console.log(searchParams)
   const res = await fetch(
     `https://gateway.marvel.com:443/v1/public/characters?nameStartsWith=${searchParams}&apikey=d158498c097567406c1e29f6202a5f4f&hash=43a2930ceed84cfe63db8b5efe33599c&ts=1`
   );

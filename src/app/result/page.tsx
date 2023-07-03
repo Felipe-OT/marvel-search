@@ -35,11 +35,15 @@ function ResultPage() {
   const [pageOpacity, setPageOpacity] = useState(true);
   const router = useRouter();
 
+
+
   useEffect(() => {
+    console.log(searchValue)
     fetchData();
   }, []);
 
   const fetchData = async () => {
+    console.log('fetching')
     const resultData = await getResults(searchValue);
     if (resultData.status == 500) {
       setSearchError({ msg: resultData.msg, status: resultData.status });
