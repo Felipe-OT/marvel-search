@@ -31,3 +31,7 @@ Para criar algumas animações mais complexas, foi utilizado a biblioteca Framer
 
 Ainda sobre animações, foi utilizado uma biblioteca chamada lottie-react, que permite importar animações de vetor criadas pela plataforma Lottie.
 
+## Possíveis bugs
+
+Foi relatado alguns bugs acontecendo nos cards dos personagens e no quadro de informações do personagem, pois esses elementos utilizam a propriedade 'backdrop-filter: blur()'.
+Esse bug está ocorrendo apenas no navegador Google Chrome, e faz com que os componentes dentro do 'backdrop-filter' tenham problemas na estilização.
