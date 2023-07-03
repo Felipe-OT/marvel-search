@@ -2,9 +2,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import StyledComponentsRegistry from "@/src/lib/registry";
 import { SearchProvider } from "../context/searchContext";
-import PageWrapper from "../components/wrapper/page-wrapper";
-import Image from "next/image";
-import Logo from '@/public/logo-web.png'
+
 
 const myFont = localFont({
   src: [

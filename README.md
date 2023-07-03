@@ -1,34 +1,20 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+Esse é um projeto desenvolvido utilizando NextJs, utilizando a API da Marvel para buscar personagens e suas histórias.
 
-## Getting Started
+## Iniciando
 
-First, run the development server:
+Para iniciar a aplicação, utilize npm install para instalar as dependencias, e em seguida utilize o comando abaixo:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+
 ```
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Tecnologias utilizadas
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Para estilização dos componentes, foi utilizado a biblioteca Styled-Components, junto com o auxílio de TailwindCss. O motivo de utilizar TailwindCSS, é para facilitar o teste de algumas animações e transições de maneira mais ágil. No final do projeto, todas as classes do TailwindCSS foram removidas, e toda a estilização foi feita com Styled-Components.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Para criar algumas animações mais complexas, foi utilizado a biblioteca Framer-Motion. Essa biblioteca facilita a criação de animação que envolvem modificação do Layout da página e transformações de componentes.
 
-## Learn More
+Ainda sobre animações, foi utilizado uma biblioteca chamada lottie-react, que permite importar animações de vetor criadas pela plataforma Lottie.
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
