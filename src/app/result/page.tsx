@@ -10,6 +10,7 @@ import { motion, AnimatePresence, LayoutGroup } from "framer-motion";
 import CharacterCard from "@/src/components/cards/characterCard";
 import PageWrapper from "@/src/components/wrapper/page-wrapper";
 import useCharacter from "@/src/hooks/useCharacter";
+import { ResultsContainer } from "./styles";
 
 interface IHeroType {
   id: number;
@@ -72,17 +73,13 @@ function ResultPage() {
   };
 
   useEffect(() => {
-    console.log(searchError)
-  },[searchError])
+    console.log(pageOpacity)
+  },[pageOpacity])
 
   return (
-    <motion.div
-      className={`flex min-h-screen flex-col items-center justify-center px-4 sm:px-0 py-28  ${
-        pageOpacity ? "opacity-100" : "opacity-0"
-      } transition-opacity duration-300`}
-    >
+    <ResultsContainer pageOpacity={pageOpacity}>
       <div
-        className={`container mx-auto flex flex-col  ${
+        className={`container mx-auto flex flex-col ${
           results.length > 0 && "gap-y-10"
         }  justify-center items-center`}
       >
@@ -131,7 +128,7 @@ function ResultPage() {
           </motion.ul>
         </LayoutGroup>
       </div>
-    </motion.div>
+    </ResultsContainer>
   );
 }
 
